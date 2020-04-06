@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+</head>
+
+<body>
+    <p>This is my page</p>
+    <img>
+    <img>
+    <p id="text"></p>
+
+    <script>
+        // won't work for demo, because of CORS policy
+        let imgOneUrl = "https://github.com/mdn/learning-area/blob/master/javascript/asynchronous/promises/coffee.jpg";
+        let imgTwoUrl = "https://github.com/mdn/learning-area/blob/master/javascript/asynchronous/promises/tea.jpg";
+        let textUrl = "https://github.com/mdn/learning-area/blob/master/javascript/asynchronous/promises/description.txt";
+
+        let imgs = document.body.querySelectorAll("img");
+        const imgOne = imgs[0];
+        const imgTwo = imgs[1];
+        const para = document.getElementById("text");
+
+        // use Promise#all, this is not a good idea, just an example
+        Promise.all([fetch(imgOneUrl), fetch(imgTwoUrl), fetch(para)]).then(values => {
+            let imgOneFetched = false;
+            let imgTwoFetched = false;
+            for (let resp of values) {
+                if (resp.type === "text") {
+                    resp.text().then((text) => {
+                        para.textContent = text;
+                    })
+                } else {
+                    if (!imgOneFetched) {
+                        resp.blob().then((blob) => {
+                            imgOne.src = URL.createObjectURL(blob);
+                        })
+                    }
+                }
+            }
+        }).catch(e => {
+            window.alert(e.message);
+        }).finally(() => {
+            window.alert("Finish");
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let promiseTimeOut = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("Heavy job that takes 2 seconds");
+            }, 2000)
+        });
+        promiseTimeOut.then((text) => {
+            window.alert(text);
+        });
+        // we can shorten this as follows
+        // promiseTimeOut.then(alert);
+
+        // we can also reject a promise based on conditions
+        let rejectedTimeout = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("Rejected Job")
+            }, 1000);
+        });
+        rejectedTimeout.then((text) => {
+            return Promise.reject(text + " is rejected");
+        }).catch(e => {
+            window.alert(e);
+        });
+    </script>
+</body>
+
+</html>

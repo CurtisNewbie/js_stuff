@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        let url = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/1200px-Google_Images_2015_logo.svg.png";
+
+        async function fetchImg() {
+            // block and wait for fetch Promise to finish
+            let resp = await fetch(url);
+            // block and wait for the blob() Promise to finish
+            let blob = await resp.blob();
+
+            let img = document.createElement("img");
+            img.src = URL.createObjectURL(blob);
+            document.body.appendChild(img);
+        }
+        fetchImg().catch(e => {
+            console.log(e);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+</head>
+
+<body>
+    <p>Spin!</p>
+    <div>↻</div>
+
+    <style>
+        html {
+            background-color: white;
+            height: 100%;
+        }
+
+        body {
+            height: inherit;
+            background-color: red;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div {
+            display: inline-block;
+            font-size: 10rem;
+        }
+    </style>
+    <script>
+        const spinner = document.querySelector("div");
+        let degree = 0;
+        let startTime = null;
+        let rotateAnimation;
+
+        function draw(timestamp) {
+            if (!startTime) {
+                startTime = timestamp;
+            }
+            // calculate degree based on the time period
+            degree = (timestamp - startTime) / 2;
+
+            if (degree > 359) {
+                degree %= 360;
+            }
+            spinner.style.transform = `rotate(${degree}deg)`;
+            rotateAnimation = requestAnimationFrame(draw);
+        }
+        draw();
+
+        let p = document.querySelector("p");
+        let countdown = 10;
+        let countdownTimer = setInterval(() => {
+            p.textContent = countdown--;
+        }, 1000);
+
+        // set a timer to stop this animation after 10 second
+        setTimeout(() => {
+            p.textContent = "Rotation Animation Stopped";
+            cancelAnimationFrame(rotateAnimation);
+            clearInterval(countdownTimer);
+        }, 1000 * 11);
+
+
+    </script>
+</body>
+
+</html>

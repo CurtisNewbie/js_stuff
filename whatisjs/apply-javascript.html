@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8">
+  <title>Apply JavaScript example</title>
+</head>
+
+<body>
+  <button>Click me</button>
+  <p id="p1">Don't click me</p>
+  <p onclick="say()">Fine, click me then</p>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const btns = document.querySelectorAll("button");
+      for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", createPara);
+      }
+    });
+
+    const para = document.getElementById("p1");
+    if (para != null)
+      para.addEventListener("click", function () {
+        let note = document.createElement("p");
+        note.textContent = "You Still clicked? You just can't control yourself huh?";
+        document.body.appendChild(note);
+      });
+
+    function createPara() {
+      let para = document.createElement("p");
+      para.textContent = "You Clicked the btn!";
+      document.body.appendChild(para);
+    }
+
+    function say() {
+      alert("Good! now you listen");
+    }
+  </script>
+</body>
+
+</html>
